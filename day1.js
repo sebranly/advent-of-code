@@ -7,7 +7,7 @@ const runTests = (data) => {
 			let errorCount = 0;
 			const partKey = `part${partNumber}`;
 			dataDay[partKey].map((dataLine, lineIndex) => {
-				const result = solvers[0](dataLine.input)[partKey];
+				const result = solvers[dayIndex](dataLine.input)[partKey];
 				if (result !== dataLine.output) {
 					console.log(`Expected ${dataLine.output} but got ${result}`);
 					errorCount++;
@@ -24,9 +24,16 @@ const runTests = (data) => {
 	});
 };
 
+// Clockwise
+const directions = ['N', 'E', 'S', 'W'];
+
+const distanceFromOrigin = (coord) =>
+	Math.abs(coord.x) + Math.abs(coord.y)
+
 const day1 = (input) => {
 	let coord = { x: 0, y: 0 };
-	let vector = { x: 0, y: -1 };
+	let currentDirectionIndex = 0;
+	let vect;
 
 	let firstLocationVisitedTwice = null;
 	const history = [{ x: 0, y: 0 }];
@@ -35,27 +42,29 @@ const day1 = (input) => {
 	steps.map((step) => {
 		const letter = step[0];
 		const number = parseInt(step.substring(1), 10);
-		const sign = letter === 'L' ? 1 : -1;
-		if (vector.x === 0 && vector.y === -1) {
-			vector.x = -sign;
-			vector.y = 0;
-		}
-		else if (vector.x === 1 && vector.y === 0) {
-			vector.x = 0;
-			vector.y = -sign;
-		}
-		else if (vector.x === 0 && vector.y === 1) {
-			vector.x = sign;
-			vector.y = 0;
-		}
-		else if (vector.x === -1 && vector.y === 0) {
-			vector.x = 0;
-			vector.y = sign;
+		const directionChange = letter === 'L' ? -1 : 1;
+		currentDirectionIndex += directionChange;
+		currentDirectionIndex = (currentDirectionIndex + directions.length) % directions.length;
+
+		switch (directions[currentDirectionIndex]) {
+			case 'N':
+				vect = { x: 0, y: -1 };
+				break;
+			case 'E':
+				vect = { x: 1, y: 0 };
+				break;
+			case 'S':
+				vect = { x: 0, y: 1 };
+				break;
+			case 'W':
+			default:
+				vect = { x: -1, y: 0 };
+				break;
 		}
 
 		for (i = 0 ; i < number ; i++) {
-			coord.x += vector.x;
-			coord.y += vector.y;
+			coord.x += vect.x;
+			coord.y += vect.y;
 
 			if (!firstLocationVisitedTwice) {
 				history.map((historyLine) => {
@@ -70,11 +79,11 @@ const day1 = (input) => {
 	});
 
 	const part2 = firstLocationVisitedTwice
-		? Math.abs(firstLocationVisitedTwice.x) + Math.abs(firstLocationVisitedTwice.y)
+		? distanceFromOrigin(firstLocationVisitedTwice)
 		: 0;
 
 	return {
-		part1: Math.abs(coord.x) + Math.abs(coord.y),
+		part1: distanceFromOrigin(coord),
 		part2
 	};
 };
