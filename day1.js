@@ -28,7 +28,39 @@ const runTests = (data) => {
 const directions = ['N', 'E', 'S', 'W'];
 
 const distanceFromOrigin = (coord) =>
-	Math.abs(coord.x) + Math.abs(coord.y)
+	Math.abs(coord.x) + Math.abs(coord.y);
+
+const valueBetween = (value, min, max) =>
+	value >= min && value <= max;
+
+const coordBetween = (coord, xMin, xMax, yMin, yMax) =>
+	valueBetween(coord.x, xMin, xMax) && valueBetween(coord.y, yMin, yMax);
+
+const coordMove = (coord, change) => {
+	switch (change) {
+		case 'U':
+			coord.y--;
+			break;
+		case 'R':
+			coord.x++;
+			break;
+		case 'D':
+			coord.y++;
+			break;
+		case 'L':
+		default:
+			coord.x--;
+			break;
+	}
+};
+
+const makeValueCorrect = (value, min, max) => {
+	if (value < min)
+		value = min;
+	else if (value > max)
+		value = max;
+	return value;
+};
 
 const day1 = (input) => {
 	let coord = { x: 0, y: 0 };
@@ -113,35 +145,16 @@ const day2 = (input) => {
 		for (let i = 0; i < step.length; i++) {
 			const letter = step.charAt(i);
 			copyCoord = { ...coords[1] };
-			switch (letter) {
-				case 'U':
-					coords[0].y--;
-					coords[1].y--;
-					break;
-				case 'R':
-					coords[0].x++;
-					coords[1].x++;
-					break;
-				case 'D':
-					coords[0].y++;
-					coords[1].y++;
-					break;
-				case 'L':
-				default:
-					coords[0].x--;
-					coords[1].x--;
-					break;
-			}
-			if (coords[0].x < 0)
-				coords[0].x = 0;
-			else if (coords[0].x > 2)
-				coords[0].x = 2;
-			if (coords[0].y < 0)
-				coords[0].y = 0;
-			else if (coords[0].y > 2)
-				coords[0].y = 2;
 
-			if (coords[1].x < 0 || coords[1].x > 4 || coords[1].y < 0 || coords[1].y > 4 || !pads[1][coords[1].y][coords[1].x]) {
+			[0, 1].forEach((index) =>
+				coordMove(coords[index], letter)
+			);
+
+			['x', 'y'].forEach((axis) =>
+				coords[0][axis] = makeValueCorrect(coords[0][axis], 0, 2)
+			);
+
+			if (!coordBetween(coords[1], 0, 4, 0, 4) || !pads[1][coords[1].y][coords[1].x]) {
 				coords[1] = { ...copyCoord };
 			}
 		}
