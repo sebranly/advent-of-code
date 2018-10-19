@@ -6,6 +6,13 @@ More info on: https://adventofcode.com/2016
 
 Within the root repository in a terminal, run `node <file.js>`
 
+## Progress
+
+|Parts/Days|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25 :christmas_tree:|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|1|:star:|:star:|
+|2|:star:|:star:|
+
 ## License
 
 :copyright: This repository does not contain any license for now (i.e. there is no `LICENSE.md`). It means that, **for now**, this project does **not** accept contributions.
