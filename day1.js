@@ -1,7 +1,11 @@
-const runTests = (data) => {
+const runTests = (data, safelist = []) => {
 	data.map((dataDay, dayIndex) => {
+		if (safelist.length && !safelist.includes(dayIndex + 1))
+			return;
+
 		console.log(`DAY ${dayIndex + 1}:`);
 		console.log('');
+
 		['1', '2'].map((partNumber) => {
 			console.log(`Part ${partNumber}`);
 			let errorCount = 0;
@@ -207,7 +211,7 @@ const solvers = [
 	day2
 ];
 
-runTests(data);
+runTests(data, [2]);
 
 const dayResult = day2(daysInput[1]);
 console.log(dayResult);
