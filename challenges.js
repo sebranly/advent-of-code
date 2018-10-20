@@ -15,7 +15,10 @@ const runTests = (data, safelist = []) => {
 			dataDay[partKey].map((dataLine, lineIndex) => {
 				const result = solvers[dayIndex](dataLine.input)[partKey];
 				if (result !== dataLine.output) {
-					console.log(`Expected ${dataLine.output} but got ${result}`);
+					const message = typeof dataLine.output === 'string'
+						? `'${dataLine.output}'`
+						: dataLine.output
+					console.log(`Expected ${message} but got ${result}`);
 					errorCount++;
 				}
 			});
@@ -60,8 +63,36 @@ const coordMove = (coord, change) => {
 	}
 };
 
+const protectCesar = (charCode) => {
+	const max = 97 + 26 - 1;
+	let safeCharCode = charCode;
+	if (safeCharCode <= max)
+		return safeCharCode;
+	while (safeCharCode > max)
+		safeCharCode -= 26;
+	return safeCharCode;
+};
+
 const isLowerCaseLetter = (character) =>
 	character >= 'a' && character <= 'z';
+
+const getCesarMapping = (checksum) => {
+	const letters = [];
+	for (let i = 0 ; i < 26 ; i++) {
+		const asciiCode = i + 97;
+		const letter = String.fromCharCode(asciiCode);
+		const destination = String.fromCharCode(protectCesar(asciiCode + checksum));
+
+		letters.push({
+			source: letter,
+			destination
+		});
+	}
+	return letters;
+};
+
+const translateWithMapping = (mapping, letter) =>
+	mapping[letter.charCodeAt(0) - 97].destination;
 
 const indexDay4 = (array, character) => {
 	for (let i = 0 ; i < array.length ; i++) {
@@ -221,13 +252,18 @@ const day3 = (input) => {
 
 const day4 = (input) => {
 	let sum = 0;
+	let part2;
 	input.forEach((line) => {
 		const openingBracket = line.indexOf('[');
 		const closingBracket = line.indexOf(']');
 		const checksum = line.substring(openingBracket + 1, closingBracket);
 		const name = line.substring(0, openingBracket);
 		const lastDash = line.lastIndexOf('-');
-		const id = parseInt(line.substring(lastDash + 1, openingBracket), 10);
+		const shortName = line.substring(0, lastDash);
+		const id = openingBracket !== -1
+			? parseInt(line.substring(lastDash + 1, openingBracket), 10)
+			: parseInt(line.substring(lastDash + 1), 10);
+		const mapping = getCesarMapping(id);
 
 		const informationLetters = [];
 		for (let i = 0; i < name.length ; i++) {
@@ -254,19 +290,24 @@ const day4 = (input) => {
 				correct = false;
 		}
 		if (correct) sum += id;
+
+		// Part 2
+		const tempName = shortName.replace(/-/g, ' ');
+		part2 = [];
+		for (let i = 0; i < tempName.length ; i++) {
+			const character = tempName[i];
+			if (isLowerCaseLetter(character)) {
+				part2[i] = translateWithMapping(mapping, character);
+			} else {
+				part2[i] = tempName[i];
+			}
+		}
 	});
 	return {
 		part1: sum,
-		part2: 0
+		part2: part2.join('')
 	}
 };
-
-				// input: [
-				// 	'aaaaa-bbb-z-y-x-123[abxyz]',
-				// 	'a-b-c-d-e-f-g-h-987[abcde]',
-				// 	'not-a-real-room-404[oarel]',
-				// 	'totally-real-room-200[decoy]'
-				// ],
 
 const daysInput = [
 	'R4, R1, L2, R1, L1, L1, R1, L5, R1, R5, L2, R3, L3, L4, R4, R4, R3, L5, L1, R5, R3, L4, R1, R5, L1, R3, L2, R3, R1, L4, L1, R1, L1, L5, R1, L2, R2, L3, L5, R1, R5, L1, R188, L3, R2, R52, R5, L3, R79, L1, R5, R186, R2, R1, L3, L5, L2, R2, R4, R5, R5, L5, L4, R5, R3, L4, R4, L4, L4, R5, L4, L3, L1, L4, R1, R2, L5, R3, L4, R3, L3, L5, R1, R1, L3, R2, R1, R2, R2, L4, R5, R1, R3, R2, L2, L2, L1, R2, L1, L3, R5, R1, R4, R5, R2, R2, R4, R4, R1, L3, R4, L2, R2, R1, R3, L5, R5, R2, R5, L1, R2, R4, L1, R5, L3, L3, R1, L4, R2, L2, R1, L1, R4, R3, L2, L3, R3, L2, R1, L4, R5, L1, R5, L2, L1, L5, L2, L5, L2, L4, L2, R3',
@@ -324,8 +365,10 @@ const data = [
 				],
 				output: 1514
 			},
+			{ input: daysInput[3], output: 245102 }
 		],
 		part2: [
+			{ input: ['qzmt-zixmtkozy-ivhz-343'], output: 'very encrypted name' }
 		]
 	},
 ];
@@ -339,5 +382,5 @@ const solvers = [
 
 runTests(data);
 
-const dayResult = day4(daysInput[3]);
-console.log(dayResult);
+// const dayResult = day4(daysInput[3]);
+// console.log(dayResult);
