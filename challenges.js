@@ -253,6 +253,7 @@ const day3 = (input) => {
 const day4 = (input) => {
 	let sum = 0;
 	let part2;
+	let checkSumPart2 = -1;
 	input.forEach((line) => {
 		const openingBracket = line.indexOf('[');
 		const closingBracket = line.indexOf(']');
@@ -302,10 +303,13 @@ const day4 = (input) => {
 				part2[i] = tempName[i];
 			}
 		}
+		if (part2.join('').toLowerCase().includes('north'))
+			checkSumPart2 = id;
 	});
+
 	return {
 		part1: sum,
-		part2: part2.join('')
+		part2: checkSumPart2 !== -1 ? checkSumPart2 : part2.join('')
 	}
 };
 
@@ -368,7 +372,8 @@ const data = [
 			{ input: daysInput[3], output: 245102 }
 		],
 		part2: [
-			{ input: ['qzmt-zixmtkozy-ivhz-343'], output: 'very encrypted name' }
+			{ input: ['qzmt-zixmtkozy-ivhz-343'], output: 'very encrypted name' },
+			{ input: daysInput[3], output: 324 }
 		]
 	},
 ];
@@ -382,5 +387,5 @@ const solvers = [
 
 runTests(data);
 
-// const dayResult = day4(daysInput[3]);
-// console.log(dayResult);
+const dayResult = day4(daysInput[3]);
+console.log(dayResult);
