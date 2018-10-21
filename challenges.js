@@ -477,7 +477,8 @@ const data = [
 			{ input: daysInput[5], output: 'qzedlxso' }
 		],
 		part2: [
-			{ input: exampleDay6, output: 'advent' }
+			{ input: exampleDay6, output: 'advent' },
+			{ input: daysInput[5], output: 'ucmifjae' }
 		]
 	},
 ];
