@@ -1,0 +1,24 @@
+{
+  "name": "advent-of-code-2016",
+  "version": "1.0.0",
+  "description": "Advent of Code is a series of small programming puzzles for a variety of skill levels. This is the 2016 edition, done retroactively in JavaScript. More info on: https://adventofcode.com/2016",
+  "main": "challenges.js",
+  "dependencies": {
+    "js-md5": "^0.7.3",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebranly/advent-of-code-2016.git"
+  },
+  "author": "sebranly",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/sebranly/advent-of-code-2016/issues"
+  },
+  "homepage": "https://github.com/sebranly/advent-of-code-2016#readme"
+}

@@ -492,7 +492,7 @@ const solvers = [
 	day6
 ];
 
-runTests(data, [1, 2, 3, 4, 6]);
+runTests(data);
 
 const dayResult = day6(daysInput[5]);
 console.log(dayResult);
