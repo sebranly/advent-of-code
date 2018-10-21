@@ -1,4 +1,4 @@
-const { orderBy, sortBy } = require('lodash');
+const { flatten, orderBy, sortBy, uniq } = require('lodash');
 const md5 = require('js-md5');
 
 const runTests = (data, safelist = []) => {
@@ -113,12 +113,33 @@ const indexDay4 = (array, character) => {
 
 const containsABBA = (string) => {
 	for (let i = 0 ; i < string.length - 3 ; i++) {
-		if (string[i] !== string[i+1] && string[i] === string[i + 3] && string[i + 1] === string[i + 2]) {
+		if (string[i] !== string[i + 1] && string[i] === string[i + 3] && string[i + 1] === string[i + 2]) {
 			return true;
 		}
 	}
 	return false;
 };
+
+const ABAMatches = (string) => {
+	const matches = [];
+	for (let i = 0 ; i < string.length - 2 ; i++) {
+		if (string[i] !== string[i + 1] && string[i] === string[i + 2]) {
+			matches.push(string.substring(i, i + 3));
+		}
+	}
+	return matches.length
+		? matches
+		: null;
+};
+
+const BABMatches = (string, aba) => {
+	for (let i = 0 ; i < string.length - 2 ; i++) {
+		if (string[i] !== string[i + 1] && string[i] === string[i + 2] && string[i] === aba[1] && string[i + 1] === aba[0]) {
+			return true;
+		}
+	}
+	return false;
+}
 
 const makeValueCorrect = (value, min, max) => {
 	if (value < min)
@@ -403,7 +424,7 @@ const day6 = (input) => {
 };
 
 const day7 = (input) => {
-	let part1 = 0;
+	let part1 = 0, part2 = 0;
 	input.forEach((line) => {
 		const outsideBrackets = [];
 		const insideBrackets = [];
@@ -439,11 +460,33 @@ const day7 = (input) => {
 		if (foundOneValid) {
 			part1 += 1;
 		}
+
+		const allABA = [];
+		outsideBrackets.forEach((word) => {
+			const aba = ABAMatches(word);
+			if (aba) {
+				allABA.push(aba);
+			}
+		});
+
+		let foundABAAndBAB = false;
+		const uniqueABA = uniq(flatten(allABA));
+		insideBrackets.forEach((word) => {
+			uniqueABA.forEach((aba) => {
+				if (BABMatches(word, aba)) {
+					foundABAAndBAB = true;
+				}
+			})
+		});
+
+		if (foundABAAndBAB) {
+			part2 += 1;
+		}
 	});
 
 	return {
 		part1,
-		part2: -1
+		part2
 	};
 };
 
@@ -547,6 +590,11 @@ const data = [
 			{ input: daysInput[6], output: 118 }
 		],
 		part2: [
+			{ input: ['aba[bab]xyz'], output: 1 },
+			{ input: ['xyx[xyx]xyx'], output: 0 },
+			{ input: ['aaa[kek]eke'], output: 1 },
+			{ input: ['zazbz[bzb]cdb'], output: 1 },
+			{ input: daysInput[6], output: 260 }
 		]
 	}
 ];
