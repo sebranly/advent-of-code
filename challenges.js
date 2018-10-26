@@ -585,7 +585,36 @@ const day8 = (input) => {
 	}
 };
 
-const day9 = (input, partNumber) => {
+const b = (a) => {
+	let count = 0;
+	const matches = a.match(/^\((\d+)x\d+\)/);
+	let number = matches ? matches[1] : 0;
+	const c = [];
+	let ch = [];
+	let sawLetter = false;
+	for (let i = 0 ; i < a.length ; i++) {
+		if (a[i] >= 'A' && a[i] <= 'Z') {
+			sawLetter = true;
+			count += 1;
+			ch.push(a[i]);
+		} else if (a[i] === '(' && sawLetter && count >= number) {
+			portion = a.substring(i);
+			const goals = portion.match(/^\((\d+)x\d+\)/);
+			number = goals ? goals[1] : 0;
+			c.push(ch.join(''));
+			ch = [a[i]];
+			sawLetter = false;
+			count = 0;
+		} else {
+			count += 1;
+			ch.push(a[i]);
+		}
+	}
+	c.push(ch.join(''));
+	return c;
+};
+
+const day9 = (input, partNumber, cache = {}) => {
 	const output = { part1: [], part2: [] };
 
 	let cursor = 0;
@@ -608,10 +637,18 @@ const day9 = (input, partNumber) => {
 	}
 
 	const solution2 = output.part2.join('');
+	if (!solution2.includes('(')) {
+		cache[input] = solution2.length;
+		// console.log('Caching new', input, cache[input]);
+	}
 
 	return {
 		part1: output.part1.join('').length,
-		part2: solution2.includes('(') ? day9(solution2, 2).part2 : solution2.length
+		part2: solution2.includes('(')
+			? b(solution2).map((decompo) => {
+				return cache[decompo] !== undefined ? cache[decompo] : day9(decompo, 2, cache).part2;
+			}).reduce((v, acc) => v + acc)
+			: solution2.length
 	};
 };
 
@@ -768,5 +805,5 @@ const solvers = [
 
 runTests(data, [1, 2, 3, 4, 6, 7, 8, 9]);
 
-const dayResult = day9(daysInput[8], 2);
-console.log(dayResult);
+// const dayResult = day9(daysInput[8], 2);
+// console.log(dayResult);
