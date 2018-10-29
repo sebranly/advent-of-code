@@ -592,6 +592,7 @@ const b = (a) => {
 	const c = [];
 	let ch = [];
 	let sawLetter = false;
+	let sawInitialClose = false;
 	for (let i = 0 ; i < a.length ; i++) {
 		if (a[i] >= 'A' && a[i] <= 'Z') {
 			sawLetter = true;
@@ -604,9 +605,14 @@ const b = (a) => {
 			c.push(ch.join(''));
 			ch = [a[i]];
 			sawLetter = false;
+			sawInitialClose = false;
 			count = 0;
 		} else {
-			count += 1;
+			if (!sawInitialClose && a[i] === ')') {
+				sawInitialClose = true;
+			} else if (sawInitialClose) {
+				count += 1;
+			}
 			ch.push(a[i]);
 		}
 	}
@@ -614,7 +620,17 @@ const b = (a) => {
 	return c;
 };
 
-const day9 = (input, partNumber, cache = {}) => {
+const day9 = (input, partNumber) => {
+	if (partNumber === 1)
+		return day9bis(input, partNumber);
+	else {
+		return {
+			part2: b(input).map((decompo) => day9bis(decompo, 2).part2).reduce((v, acc) => acc + v)
+		};
+	}
+};
+
+const day9bis = (input, partNumber, cache = {}) => {
 	const output = { part1: [], part2: [] };
 
 	let cursor = 0;
@@ -637,18 +653,21 @@ const day9 = (input, partNumber, cache = {}) => {
 	}
 
 	const solution2 = output.part2.join('');
-	if (!solution2.includes('(')) {
-		cache[input] = solution2.length;
-		// console.log('Caching new', input, cache[input]);
-	}
+
+	const part2 = solution2.includes('(')
+		? b(solution2).map((decompo) => {
+			const cacher = cache[decompo];
+			if (cacher !== undefined) {
+				return cache[decompo];
+			}
+			return day9bis(decompo, 2, cache).part2;
+		}).reduce((v, acc) => v + acc)
+		: solution2.length;
+	cache[input] = part2;
 
 	return {
 		part1: output.part1.join('').length,
-		part2: solution2.includes('(')
-			? b(solution2).map((decompo) => {
-				return cache[decompo] !== undefined ? cache[decompo] : day9(decompo, 2, cache).part2;
-			}).reduce((v, acc) => v + acc)
-			: solution2.length
+		part2
 	};
 };
 
@@ -786,7 +805,7 @@ const data = [
 			{ input: '(3x3)XYZ', output: 'XYZXYZXYZ'.length },
 			{ input: 'X(8x2)(3x3)ABCY', output: 'XABCABCABCABCABCABCY'.length },
 			{ input: '(27x12)(20x12)(13x14)(7x10)(1x12)A', output: 241920 },
-			{ input: '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN', output: 445 },
+			{ input: '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN', output: 445 }
 		]
 	}
 ];
@@ -805,5 +824,5 @@ const solvers = [
 
 runTests(data, [1, 2, 3, 4, 6, 7, 8, 9]);
 
-// const dayResult = day9(daysInput[8], 2);
-// console.log(dayResult);
+const dayResult = day9(daysInput[8], 2);
+console.log(dayResult);
