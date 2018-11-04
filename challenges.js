@@ -1,4 +1,4 @@
-const { cloneDeep, flatten, orderBy, shuffle, sortBy, uniq } = require('lodash');
+const { cloneDeep, flatten, orderBy, sortBy, uniq } = require('lodash');
 const md5 = require('js-md5');
 
 const runTests = (data, safelist = []) => {
@@ -843,30 +843,29 @@ const day12 = ({ instructions, processor }, partNumber) => {
 	}
 };
 
-const reach = (array, currentX, currentY, goalX, goalY, canWalkOn, limitSize, steps = 0) => {
-	if (currentX === goalX && currentY === goalY) {
-		array[currentY][currentX] = steps;
-		return steps;
-	}
-	if (!valueBetween(currentX, 0, limitSize - 1) || !valueBetween(currentY, 0, limitSize - 1) || array[currentY][currentX] !== canWalkOn) {
-		return -1;
+const reach = (array, currentX, currentY, canWalkOn, limitSize, steps = 0) => {
+	const correctValues = valueBetween(currentX, 0, limitSize - 1) && valueBetween(currentY, 0, limitSize - 1);
+	const canWalkOnCell = correctValues && (array[currentY][currentX] === canWalkOn || !isNaN(parseInt(array[currentY][currentX], 10)));
+	if (!canWalkOnCell) {
+		return;
 	} else {
-		array[currentY][currentX] = steps;
+		if (isNaN(array[currentY][currentX]) || array[currentY][currentX] > steps) {
+			array[currentY][currentX] = steps;
+		} else {
+			return;
+		}
 	}
 
-	const possibleMoves = shuffle([[0, -1], [0, 1], [-1, 0], [1, 0]]);
+	const possibleMoves = [[0, 1], [0, -1], [-1, 0], [1, 0]];
 
 	for (let i = 0 ; i < possibleMoves.length ; i++) {
 		const move = possibleMoves[i];
-		const returnedValue = reach(array, currentX + move[0], currentY + move[1], goalX, goalY, canWalkOn, limitSize, steps + 1);
-		if (returnedValue !== -1)
-			return returnedValue;
+		reach(array, currentX + move[0], currentY + move[1], canWalkOn, limitSize, steps + 1);
 	}
-	return -1;
 };
 
 const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
-	const arbitrarySize = 50;
+	const arbitrarySize = 100;
 	const array = create2DArray(arbitrarySize, arbitrarySize);
 	const EMPTY_SYMBOL = '.';
 
@@ -883,31 +882,37 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 		}
 	}
 
-	// TBD: Not ideal at all
-	let p1 = arbitrarySize * arbitrarySize;
-	for (counter = 0 ; counter < 1000 ; counter++) {
-		const cloneArray = cloneDeep(array);
-		const newValue = reach(cloneArray, startPointX, startPointY, goalX, goalY, EMPTY_SYMBOL, arbitrarySize);
-		if (newValue < p1)
-			p1 = newValue;
+	reach(array, startPointX, startPointY, EMPTY_SYMBOL, arbitrarySize);
+
+	const displayArray = false;
+	if (displayArray) {
+		for (let y = 0 ; y < 10 ; y++) {
+			console.log('');
+			const line = [];
+			for (let x = 0 ; x < arbitrarySize ; x++) {
+				const value = array[y][x];
+				const displayedValue = !isNaN(parseInt(value, 10))
+					? ('0' + value).slice(-2)
+					: `${value}${value}`;
+				line.push(displayedValue);
+			}
+			console.log(line.join(' '));
+		}
 	}
 
-	// for (let y = 0 ; y < arbitrarySize ; y++) {
-	// 	console.log('');
-	// 	const line = [];
-	// 	for (let x = 0 ; x < arbitrarySize ; x++) {
-	// 		const value = array[y][x];
-	// 		const displayedValue = !isNaN(parseInt(value, 10))
-	// 			? ('0' + value).slice(-2)
-	// 			: `${value}${value}`;
-	// 		line.push(displayedValue);
-	// 	}
-	// 	console.log(line.join(' '));
-	// }
+	let count = 0;
+	for (let x = 0 ; x < arbitrarySize ; x++) {
+		for (let y = 0 ; y < arbitrarySize ; y++) {
+			const value = parseInt(array[y][x], 10);
+			if (!isNaN(value) && value <= 50) {
+				count++;
+			}
+		}
+	}
 
 	return {
-		part1: p1,
-		part2: -1
+		part1: array[goalY][goalX],
+		part2: count
 	};
 };
 
@@ -1081,7 +1086,9 @@ const data = [
 			{ input: { favoriteNumber: 10, goalX: 7, goalY: 4, startPointX: 1, startPointY: 1 }, output: 11 },
 			{ input: daysInput[12], output: 86 }
 		],
-		part2: []
+		part2: [
+			{ input: daysInput[12], output: 127 }
+		]
 	}
 ];
 
