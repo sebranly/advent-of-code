@@ -843,13 +843,13 @@ const day12 = ({ instructions, processor }, partNumber) => {
 	}
 };
 
-const reach = (array, currentX, currentY, canWalkOn, limitSize, steps = 0) => {
+const fillShortestPath = (array, currentX, currentY, canWalkOn, limitSize, steps = 0) => {
 	const correctValues = valueBetween(currentX, 0, limitSize - 1) && valueBetween(currentY, 0, limitSize - 1);
-	const canWalkOnCell = correctValues && (array[currentY][currentX] === canWalkOn || !isNaN(parseInt(array[currentY][currentX], 10)));
+	const canWalkOnCell = correctValues && (array[currentY][currentX] === canWalkOn || Number.isInteger(array[currentY][currentX]));
 	if (!canWalkOnCell) {
 		return;
 	} else {
-		if (isNaN(array[currentY][currentX]) || array[currentY][currentX] > steps) {
+		if (array[currentY][currentX] === canWalkOn || array[currentY][currentX] > steps) {
 			array[currentY][currentX] = steps;
 		} else {
 			return;
@@ -860,7 +860,7 @@ const reach = (array, currentX, currentY, canWalkOn, limitSize, steps = 0) => {
 
 	for (let i = 0 ; i < possibleMoves.length ; i++) {
 		const move = possibleMoves[i];
-		reach(array, currentX + move[0], currentY + move[1], canWalkOn, limitSize, steps + 1);
+		fillShortestPath(array, currentX + move[0], currentY + move[1], canWalkOn, limitSize, steps + 1);
 	}
 };
 
@@ -882,7 +882,7 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 		}
 	}
 
-	reach(array, startPointX, startPointY, EMPTY_SYMBOL, arbitrarySize);
+	fillShortestPath(array, startPointX, startPointY, EMPTY_SYMBOL, arbitrarySize);
 
 	const displayArray = false;
 	if (displayArray) {
@@ -891,7 +891,7 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 			const line = [];
 			for (let x = 0 ; x < arbitrarySize ; x++) {
 				const value = array[y][x];
-				const displayedValue = !isNaN(parseInt(value, 10))
+				const displayedValue = Number.isInteger(parseInt(value, 10))
 					? ('0' + value).slice(-2)
 					: `${value}${value}`;
 				line.push(displayedValue);
@@ -904,7 +904,7 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 	for (let x = 0 ; x < arbitrarySize ; x++) {
 		for (let y = 0 ; y < arbitrarySize ; y++) {
 			const value = parseInt(array[y][x], 10);
-			if (!isNaN(value) && value <= 50) {
+			if (Number.isInteger(value) && value <= 50) {
 				count++;
 			}
 		}
