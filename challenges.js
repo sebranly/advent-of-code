@@ -784,11 +784,11 @@ const day11 = () => {
 	console.log('nothing to be done');
 };
 
-const day12 = ({ instructions, processor }) => {
+const day12 = ({ instructions, processor }, partNumber) => {
 	const registers = {
 		'a': 0,
 		'b': 0,
-		'c': 0,
+		'c': partNumber === 1 ? 0 : 1,
 		'd': 0
 	};
 
@@ -830,7 +830,7 @@ const day12 = ({ instructions, processor }) => {
 
 	return {
 		part1: registers[processor],
-		part2: -1
+		part2: registers[processor]
 	}
 }
 
@@ -993,7 +993,9 @@ const data = [
 			{ input: { processor: 'a', instructions: ['cpy 41 a', 'inc a', 'inc a', 'dec a', 'jnz a 2', 'dec a'] }, output: 42 },
 			{ input: daysInput[11], output: 318003 }
 		],
-		part2: []
+		part2: [
+			{ input: daysInput[11], output: 9227657 }
+		]
 	}
 ];
 
