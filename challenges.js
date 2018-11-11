@@ -916,14 +916,30 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 	};
 };
 
-const day14 = (input) => {
+const md5Recursive = (originalHash, level = 0) => {
+	if (level === 2016)
+		return originalHash;
+	return md5Recursive(md5(originalHash), level + 1);
+};
+
+const day14 = (input, partNumber) => {
 	const correctKeyIndexes = [];
 	const CORRECT_KEY_INDEXES_LIMIT = 64;
 
-	const LIMIT = 100000;
+	const LIMIT = 25000;
 	const md5Hashes = [];
 	for (let i = 0 ; i < LIMIT ; i++) {
-		md5Hashes.push(md5(`${input}${i}`));
+		let newHash;
+		if (partNumber === 2) {
+			const originalHash = md5(`${input}${i}`);
+			newHash = md5Recursive(originalHash);
+		} else {
+			newHash = md5(`${input}${i}`);
+		}
+		md5Hashes.push(newHash);
+		// if (i % 1000 === 0) {
+		// 	console.log(i);
+		// }
 	}
 
 	let indexCounter = 0;
@@ -948,9 +964,11 @@ const day14 = (input) => {
 		indexCounter++;
 	}
 
+	const lastIndex = correctKeyIndexes[CORRECT_KEY_INDEXES_LIMIT - 1];
+
 	return {
-		part1: correctKeyIndexes[CORRECT_KEY_INDEXES_LIMIT - 1],
-		part2: -1
+		part1: lastIndex,
+		part2: lastIndex
 	}
 };
 
@@ -1132,9 +1150,12 @@ const data = [
 	// Day 14
 	{
 		part1: [
-			{ input: 'abc', output: 22728 }
+			{ input: 'abc', output: 22728 },
+			{ input: daysInput[13], output: 23890 }
 		],
 		part2: [
+			{ input: 'abc', output: 22551 },
+			{ input: daysInput[13], output: 22696 }
 		]
 	}
 ];
@@ -1158,5 +1179,5 @@ const solvers = [
 
 runTests(data, [14]);
 
-const dayResult = day14(daysInput[13]);
+// const dayResult = day14(daysInput[13], 2);
 console.log(dayResult);
