@@ -972,7 +972,7 @@ const day14 = (input, partNumber) => {
 	}
 };
 
-const day15 = (input) => {
+const day15 = (input, partNumber) => {
 	const discs = [];
 	input.forEach((discText) => {
 		const indications = discText.match(/Disc #\d+ has (\d+) positions; at time=0, it is at position (\d+)./);
@@ -980,6 +980,9 @@ const day15 = (input) => {
 		const initialPosition = parseInt(indications[2], 10);
 		discs.push({ initialPosition, numberPositions });
 	});
+	if (partNumber === 2) {
+		discs.push({ initialPosition: 0, numberPositions: 11 });
+	}
 
 	let timeNotFound = true;
 	let time = 0;
@@ -1001,7 +1004,7 @@ const day15 = (input) => {
 
 	return {
 		part1: time,
-		part2: 0
+		part2: time
 	};
 };
 
@@ -1198,7 +1201,9 @@ const data = [
 			{ input: ['Disc #1 has 5 positions; at time=0, it is at position 4.', 'Disc #2 has 2 positions; at time=0, it is at position 1.'], output: 5 },
 			{ input: daysInput[14], output: 203660 }
 		],
-		part2: []
+		part2: [
+			{ input: daysInput[14], output: 2408135 }
+		]
 	}
 ];
 
@@ -1222,5 +1227,5 @@ const solvers = [
 
 runTests(data, [15]);
 
-const dayResult = day15(daysInput[14]);
+const dayResult = day15(daysInput[14], 2);
 console.log(dayResult);
