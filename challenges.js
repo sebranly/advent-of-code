@@ -1100,7 +1100,7 @@ const day17 = (input) => {
 	const path = flattenDeep(reachDay17(input, maze, position));
 	return {
 		part1: path.reduce((a, b) => a.length < b.length ? a : b),
-		part2: ''
+		part2: path.reduce((a, b) => a.length > b.length ? a : b).length,
 	};
 };
 
@@ -1321,7 +1321,12 @@ const data = [
 			{ input: 'ulqzkmiv', output: 'DRURDRUDDLLDLUURRDULRLDUUDDDRR' },
 			{ input: daysInput[16], output: 'DDRUDLRRRD' }
 		],
-		part2: []
+		part2: [
+			{ input: 'ihgpwlah', output: 370 },
+			{ input: 'kglvqrro', output: 492 },
+			{ input: 'ulqzkmiv', output: 830 },
+			{ input: daysInput[16], output: 398 }
+		]
 	}
 ];
 
