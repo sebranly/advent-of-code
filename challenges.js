@@ -1,4 +1,4 @@
-const { cloneDeep, flatten, orderBy, reverse, sortBy, uniq } = require('lodash');
+const { cloneDeep, flatten, flattenDeep, orderBy, reverse, sortBy, uniq } = require('lodash');
 const md5 = require('js-md5');
 
 const runTests = (data, safelist = []) => {
@@ -1034,6 +1034,76 @@ const day16 = ({ length1, length2, state }, partNumber) => {
 	}
 };
 
+const reachDay17 = (input, maze, pos, path = '') => {
+	const copyMaze = cloneDeep(maze);
+	if (pos.x === copyMaze.size - 1 && pos.y === copyMaze.size - 1) {
+		return path;
+	}
+	const md5Hash = md5(`${input}${path}`);
+	const limitedMd5Hash = md5Hash.substring(0, 4);
+
+	const cell = copyMaze.array[pos.y][pos.x];
+
+	const isOpen = (character) => isLowerCaseLetter(character) && character !== 'a';
+
+	cell.up = isOpen(limitedMd5Hash[0]);
+	cell.down = isOpen(limitedMd5Hash[1]);
+	cell.left = isOpen(limitedMd5Hash[2]);
+	cell.right = isOpen(limitedMd5Hash[3]);
+
+	if (pos.x === 0) cell.left = false;
+	if (pos.x === copyMaze.size - 1) cell.right = false;
+	if (pos.y === 0) cell.up = false;
+	if (pos.y === copyMaze.size - 1) cell.down = false;
+
+	if (!(cell.up) && !(cell.down) && !(cell.left) && !(cell.right)) {
+		return -1;
+	}
+
+	const possiblePaths = [];
+	if (cell.down) {
+		const newPos = { x: pos.x, y: pos.y + 1 };
+		const res = reachDay17(input, copyMaze, newPos, `${path}D`);
+		if (res !== -1)
+			possiblePaths.push(res);
+	}
+	if (cell.up) {
+		const newPos = { x: pos.x, y: pos.y - 1 };
+		const res = reachDay17(input, copyMaze, newPos, `${path}U`);
+		if (res !== -1)
+			possiblePaths.push(res);
+	}
+	if (cell.left) {
+		const newPos = { x: pos.x - 1, y: pos.y };
+		const res = reachDay17(input, copyMaze, newPos, `${path}L`);
+		if (res !== -1)
+			possiblePaths.push(res);
+	}
+	if (cell.right) {
+		const newPos = { x: pos.x + 1, y: pos.y };
+		const res = reachDay17(input, copyMaze, newPos, `${path}R`);
+		if (res !== -1)
+			possiblePaths.push(res);
+	}
+
+	return possiblePaths.length ? possiblePaths : -1;
+};
+
+const day17 = (input) => {
+	const SIZE = 4;
+	const maze = { array: create2DArray(SIZE, SIZE, { up: false, right: false, down: false, left: false }), size: SIZE };
+	const position = {
+		x: 0,
+		y: 0
+	};
+
+	const path = flattenDeep(reachDay17(input, maze, position));
+	return {
+		part1: path.reduce((a, b) => a.length < b.length ? a : b),
+		part2: ''
+	};
+};
+
 const daysInput = [
 	'R4, R1, L2, R1, L1, L1, R1, L5, R1, R5, L2, R3, L3, L4, R4, R4, R3, L5, L1, R5, R3, L4, R1, R5, L1, R3, L2, R3, R1, L4, L1, R1, L1, L5, R1, L2, R2, L3, L5, R1, R5, L1, R188, L3, R2, R52, R5, L3, R79, L1, R5, R186, R2, R1, L3, L5, L2, R2, R4, R5, R5, L5, L4, R5, R3, L4, R4, L4, L4, R5, L4, L3, L1, L4, R1, R2, L5, R3, L4, R3, L3, L5, R1, R1, L3, R2, R1, R2, R2, L4, R5, R1, R3, R2, L2, L2, L1, R2, L1, L3, R5, R1, R4, R5, R2, R2, R4, R4, R1, L3, R4, L2, R2, R1, R3, L5, R5, R2, R5, L1, R2, R4, L1, R5, L3, L3, R1, L4, R2, L2, R1, L1, R4, R3, L2, L3, R3, L2, R1, L4, R5, L1, R5, L2, L1, L5, L2, L5, L2, L4, L2, R3',
 	'UULLULLUULLLURDLDUURRDRRLDURDULLRURDUDULLLUULURURLRDRRRRULDRUULLLLUUDURDULDRRDRUDLRRLDLUDLDDRURURUURRRDDDLLRUDURDULUULLRRULLRULDUDRDRLDLURURUDDUDLURUDUDURLURURRURLUDDRURRDLUURLLRURRDUDLULULUDULDLLRRRDLRDLDUDRDDDRRUURRRRRUURRDRRDLURDRRURDLLUULULLRURDLDDDRRLLRRUURULURUUDDLRRUDDRURUUDLRLRDLRURRRDULLDLRUDDUULRDULURUURDULUDLLRRLDDLRDLRUDRLDDRLRRRDURDULLRRRDRRLUURURDRRDRRLDLUDURURLDUURDRUDRDDRLDRRLDLURURULLUURUDUUDLRLL,LLLULLULDDULRLLURLLLRUUDDLRUULRLULLDLLRRDRLRLRLLDRUUURULDRDDLUDLLDUDULLLRLULLLRULDRDRUDLLRLRLLUDULRRRLDRUULDDULLDULULLUDUDLDRDURDLDLLDUDRRRDLUURRUURULLURLDURLRRLLDDUUULDRLUUDUDLURLULUDURRDRLLDDDDDRRULLRLDULULDDRUURRDLUDDDUDURDDRDRULULLLLUURDURUUUULUDLRURRULRDDRURURLLRLUUDUUURDLLDDLUDRLLLUDLLLLULRLURDRRRDUUDLLDLDDDURRDDRURUURDDRURRLDDDURDLLUURUUULRLUURRUDRLLDLURDUDRLULDLRLULULUDDLRDUDRUDLUULUULDURDRRRRLRULLUDRDDRDLDUDRDRRLDLLLLUDDLRULDLLDDUULDDRRULRRUURUDRDURLLLDDUUDRUUDLULLDR,UDUUULLDDDDLUDLDULRLRDLULLDDRULDURRLURRUDLRRUDURRDUDRRRUULRLLRLUDLDRRDUURDDRDRDUUUDUDLDLLRRLUURLUUUDDDUURLULURRLURRRDRDURURUDRLRUURUDRUDDDRDRDLDRDURDLDRRDUUDLLURLDDURRRLULDRDRLLRLLLRURLDURDRLDRUURRLDLDRLDDDRLDLRLDURURLLLLDDRDUDLRULULLRDDLLUDRDRRLUUULDRLDURURDUDURLLDRRDUULDUUDLLDDRUUULRRULDDUDRDRLRULUUDUURULLDLLURLRRLDDDLLDRRDDRLDDLURRUDURULUDLLLDUDDLDLDLRUDUDRDUDDLDDLDULURDDUDRRUUURLDUURULLRLULUURLLLLDUUDURUUDUULULDRULRLRDULDLLURDLRUUUDDURLLLLDUDRLUUDUDRRURURRDRDDRULDLRLURDLLRRDRUUUURLDRURDUUDLDURUDDLRDDDDURRLRLUDRRDDURDDRLDDLLRR,ULDRUDURUDULLUDUDURLDLLRRULRRULRUDLULLLDRULLDURUULDDURDUUDLRDRUDUDDLDRDLUULRRDLRUULULUUUDUUDDRDRLLULLRRDLRRLUDRLULLUUUUURRDURLLRURRULLLRLURRULRDUURRLDDRRDRLULDDRRDRLULLRDLRRURUDURULRLUDRUDLUDDDUDUDDUDLLRDLLDRURULUDRLRRULRDDDDDRLDLRRLUUDLUURRDURRDLDLDUDRLULLULRLDRDUDLRULLULLRLDDRURLLLRLDDDLLLRURDDDLLUDLDLRLUULLLRULDRRDUDLRRDDULRLLDUURLLLLLDRULDRLLLUURDURRULURLDDLRRUDULUURRLULRDRDDLULULRRURLDLRRRUDURURDURDULURULLRLDD,DURLRRRDRULDLULUDULUURURRLULUDLURURDDURULLRRUUDLRURLDLRUDULDLLRRULLLLRRLRUULDLDLLRDUDLLRLULRLLUUULULRDLDLRRURLUDDRRLUUDDRRUDDRRURLRRULLDDULLLURRULUDLRRRURRULRLLLRULLRRURDRLURULLDULRLLLULLRLRLLLDRRRRDDDDDDULUUDUDULRURDRUDRLUULURDURLURRDRRRRDRRLLLLUDLRRDURURLLULUDDLRLRLRRUURLLURLDUULLRRDURRULRULURLLLRLUURRULLLURDDDRURDUDDULLRULUUUDDRURUUDUURURRDRURDUDRLLRRULURUDLDURLDLRRRRLLUURRLULDDDUUUURUULDLDRLDUDULDRRULDRDULURRUURDU',
@@ -1050,7 +1120,8 @@ const daysInput = [
 	{ favoriteNumber: 1364, goalX: 31, goalY: 39, startPointX: 1, startPointY: 1 },
 	'ahsbgdzn',
 	['Disc #1 has 13 positions; at time=0, it is at position 10.', 'Disc #2 has 17 positions; at time=0, it is at position 15.', 'Disc #3 has 19 positions; at time=0, it is at position 17.', 'Disc #4 has 7 positions; at time=0, it is at position 1.', 'Disc #5 has 5 positions; at time=0, it is at position 0.', 'Disc #6 has 3 positions; at time=0, it is at position 1.'],
-	{ length1: 272, length2: 35651584, state: '01111010110010011' }
+	{ length1: 272, length2: 35651584, state: '01111010110010011' },
+	'hhhxzeay'
 ];
 
 const exampleDay2 = 'ULL,RRDDD,LURDL,UUUUD';
@@ -1241,6 +1312,16 @@ const data = [
 		part2: [
 			{ input: daysInput[15], output: '11101110011100110' }
 		]
+	},
+	// Day 17
+	{
+		part1: [
+			{ input: 'ihgpwlah', output: 'DDRRRD' },
+			{ input: 'kglvqrro', output: 'DDUDRLRRUDRD' },
+			{ input: 'ulqzkmiv', output: 'DRURDRUDDLLDLUURRDULRLDUUDDDRR' },
+			{ input: daysInput[16], output: 'DDRUDLRRRD' }
+		],
+		part2: []
 	}
 ];
 
@@ -1260,10 +1341,11 @@ const solvers = [
 	day13,
 	day14,
 	day15,
-	day16
+	day16,
+	day17
 ];
 
-runTests(data, [16]);
+runTests(data, [17]);
 
-// const dayResult = day16(daysInput[15], 2);
-// console.log(dayResult);
+const dayResult = day17(daysInput[16]);
+console.log(dayResult);
