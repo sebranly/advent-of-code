@@ -1352,6 +1352,29 @@ const day22 = (input) => {
 		}
 	}
 
+	// TODO: the solution was manually found but I should find a way to program it
+	// const shortArray = width < 10 && height < 10;
+	// for (let j = 0 ; j < height ; j++) {
+	// 	const chars = [];
+	// 	for (let i = 0 ; i < width ; i++) {
+	// 		const value = array[j][i];
+
+	// 		let character;
+	// 		if ((shortArray && value.used > 20) || (!shortArray && value.used > 400)) {
+	// 			character = '#';
+	// 		} else if (i === width - 1 && j === 0) {
+	// 			character = 'G';
+	// 		} else if (value.used === 0) {
+	// 			character = '_';
+	// 		} else {
+	// 			character = '.';
+	// 		}
+
+	// 		chars.push(character);
+	// 	}
+	// 	console.log(chars.join(''));
+	// }
+
 	return {
 		part1: count,
 		part2: 0
@@ -1649,7 +1672,9 @@ const data = [
 		part1: [
 			{ input: daysInput[21], output: 950 }
 		],
-		part2: []
+		part2: [
+			// { input: ['stuff', 'Filesystem            Size  Used  Avail  Use%', '/dev/grid/node-x0-y0   10T    8T     2T   80%', '/dev/grid/node-x0-y1   11T    6T     5T   54%', '/dev/grid/node-x0-y2   32T   28T     4T   87%', '/dev/grid/node-x1-y0    9T    7T     2T   77%', '/dev/grid/node-x1-y1    8T    0T     8T    0%', '/dev/grid/node-x1-y2   11T    7T     4T   63%', '/dev/grid/node-x2-y0   10T    6T     4T   60%', '/dev/grid/node-x2-y1    9T    8T     1T   88%', '/dev/grid/node-x2-y2    9T    6T     3T   66%'], output: 7 }
+		]
 	}
 ];
 
