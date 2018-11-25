@@ -1464,9 +1464,10 @@ const day24 = (input, partNumber) => {
 	for (let i = 0 ; i < maxNumber ; i++) {
 		arrayNumbers[i] = i + 1;
 	}
-	const allCombinations = getAllPermutations(arrayNumbers.join('')).map((v) => `0${v}`);
+	const extraSuffix = partNumber === 2 ? '0' : '';
+	const allCombinations = getAllPermutations(arrayNumbers.join('')).map((v) => `0${v}${extraSuffix}`);
 
-	let part1 = height * width;
+	let solution = height * width;
 	const cache = {};
 
 	allCombinations.forEach((combination) => {
@@ -1486,14 +1487,14 @@ const day24 = (input, partNumber) => {
 				cache[key] = shortest;
 			}
 		}
-		if (steps < part1) {
-			part1 = steps;
+		if (steps < solution) {
+			solution = steps;
 		}
 	});
 
 	return {
-		part1,
-		part2: 0
+		part1: solution,
+		part2: solution
 	}
 };
 
@@ -1843,5 +1844,5 @@ const solvers = [
 
 runTests(data, [13, 24]);
 
-const dayResult = day24(daysInput[23]);
+const dayResult = day24(daysInput[23], 2);
 console.log(dayResult);
