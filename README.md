@@ -1,15 +1,25 @@
 # advent-of-code
 Advent of Code is a series of small programming puzzles for a variety of skill levels. This contains both the [2016](https://adventofcode.com/2016) edition (done retroactively in JavaScript) and the [2018](https://adventofcode.com/2018) edition (done on time).
 
+## Setup
+
+Within the root repository in a terminal, run `npm install`
+
 ## Execution
 
-Within the root repository in a terminal, run `node index.js`
+Within the root repository in a terminal, run `node index.js` after having hardcoded the day (and optional part in some cases for part 2) you want
 
 ## Unit test
 
-Within the root repository in a terminal, run `npm test`
+Within the root repository in a terminal, run `npm test`. If the test suite is successful you'll see the following:
+```
+Total: 114/114 🎉
+Test suite duration: 352767.869ms
+```
 
 ## Progress
+
+### 2016
 
 |Parts/Days|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25 :christmas_tree:|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
@@ -33,12 +43,14 @@ Having a license in order to encourage contributions is definitely part of my fu
 
 ## Memorable challenges
 
-### Easy challenges
+### 2016
+
+#### Easy challenges
 
 - Day 11 part 1 and 2 were pretty easy. I solved them without coding, by simply using a spreadsheet to move cells around.
 - Day 22 part 2 was pretty easy and solved in a similar way.
 
-### Difficult challenges
+#### Difficult challenges
 
 - Day 9 part 2 was a really tough one
 - Day 19 part 2 was a really tough one, as well. This is the only challenge that made me have a look at [reddit](https://www.reddit.com/r/adventofcode/) for a clue as I was stuck for too long.
