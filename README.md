@@ -1,10 +1,13 @@
-# advent-of-code-2016
-Advent of Code is a series of small programming puzzles for a variety of skill levels. This is the 2016 edition, done retroactively in JavaScript.
-More info on: https://adventofcode.com/2016
+# advent-of-code
+Advent of Code is a series of small programming puzzles for a variety of skill levels. This contains both the [2016](https://adventofcode.com/2016) edition (done retroactively in JavaScript) and the [2018](https://adventofcode.com/2018) edition (done on time).
 
 ## Execution
 
-Within the root repository in a terminal, run `node <file.js>`
+Within the root repository in a terminal, run `node index.js`
+
+## Unit test
+
+Within the root repository in a terminal, run `npm test`
 
 ## Progress
 
