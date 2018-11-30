@@ -7,12 +7,20 @@ Within the root repository in a terminal, run `npm install`
 
 ## Execution
 
-Within the root repository in a terminal, run `node index.js` after having hardcoded the day (and optional part in some cases for part 2) you want
+Within the root repository in a terminal, run `node index.js` after having hardcoded both the year and the day (and optional part in some cases for part 2) you want
 
-## Unit test
+## Test suite
 
-Within the root repository in a terminal, run `npm test`. If the test suite is successful you'll see the following:
+Within the root repository in a terminal, run `npm test`. It will execute two test suites:
+- one for `utils` thanks to `mocha`
+- one for `days` challenges thanks to a handmade unit test tool
+
+If the test suite is successful you'll see `mocha` results first then the handmade unit test tool's results:
 ```
+24 passing (12ms)
+
+...
+
 Total: 114/114 🎉
 Test suite duration: 352767.869ms
 ```
@@ -25,6 +33,13 @@ Test suite duration: 352767.869ms
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 |1|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star2:|
 |2|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star:|:star2:|
+
+### 2018
+
+|Parts/Days|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25 :christmas_tree:|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|1|
+|2|
 
 ## License
 
