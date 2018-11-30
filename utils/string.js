@@ -1,3 +1,5 @@
+const { valueBetween } = require('./math');
+
 const ABAMatches = (string) => {
 	const matches = [];
 	for (let i = 0 ; i < string.length - 2 ; i++) {
@@ -56,8 +58,14 @@ const getAllPermutations = (string) => {
 	return results;
 };
 
+const isLetter = (character) =>
+	isLowerCaseLetter(character) || isUpperCaseLetter(character);
+
 const isLowerCaseLetter = (character) =>
-	character >= 'a' && character <= 'z';
+	valueBetween(character, 'a', 'z');
+
+const isUpperCaseLetter = (character) =>
+	valueBetween(character, 'A', 'Z');
 
 const replaceAt = (string, index, character) =>
 	`${string.substring(0, index)}${character}${string.substring(index + 1)}`;
@@ -68,6 +76,8 @@ module.exports = {
 	containsABBA,
 	countOccurrenceOfCharInString,
 	getAllPermutations,
+	isLetter,
 	isLowerCaseLetter,
+	isUpperCaseLetter,
 	replaceAt
 };

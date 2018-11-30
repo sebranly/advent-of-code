@@ -1,3 +1,5 @@
+const { isUpperCaseLetter } = require('./string');
+
 const b = (a) => {
 	let count = 0;
 	const matches = a.match(/^\((\d+)x\d+\)/);
@@ -7,7 +9,7 @@ const b = (a) => {
 	let sawLetter = false;
 	let sawInitialClose = false;
 	for (let i = 0 ; i < a.length ; i++) {
-		if (a[i] >= 'A' && a[i] <= 'Z') {
+		if (isUpperCaseLetter(a[i])) {
 			sawLetter = true;
 			count += 1;
 			ch.push(a[i]);

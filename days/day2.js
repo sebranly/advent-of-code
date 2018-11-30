@@ -27,14 +27,14 @@ const day2 = (input) => {
 			copyCoord = { ...coords[1] };
 
 			[0, 1].forEach((index) =>
-				utils.coordMove(coords[index], letter)
+				coords[index] = utils.coordMove(coords[index], letter)
 			);
 
 			['x', 'y'].forEach((axis) =>
 				coords[0][axis] = utils.makeValueCorrect(coords[0][axis], 0, 2)
 			);
 
-			if (!utils.coordBetween(coords[1], 0, 4, 0, 4) || !pads[1][coords[1].y][coords[1].x]) {
+			if (!utils.coordBetween(coords[1], { x: 0, y: 0 }, { x: 4, y: 4 }) || !pads[1][coords[1].y][coords[1].x]) {
 				coords[1] = { ...copyCoord };
 			}
 		}

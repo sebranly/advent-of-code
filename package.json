@@ -7,9 +7,12 @@
     "js-md5": "^0.7.3",
     "lodash": "^4.17.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
   "scripts": {
-    "test": "node test"
+    "test": "mocha test/utils/*.js && node test",
+    "test-utils-only": "mocha test/utils/*.js"
   },
   "repository": {
     "type": "git",

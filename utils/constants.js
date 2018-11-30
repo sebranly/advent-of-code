@@ -1,0 +1,7 @@
+const LOWERCASE_A_VALUE = 97;
+const NUMBER_OF_LETTERS = 26;
+
+module.exports = {
+	LOWERCASE_A_VALUE,
+	NUMBER_OF_LETTERS
+};

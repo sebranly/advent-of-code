@@ -1,3 +1,5 @@
+const { clone } = require('lodash');
+
 const backToPositive = (value, increment) => {
 	let safeValue = value;
 	while (safeValue < 0)
@@ -5,25 +7,27 @@ const backToPositive = (value, increment) => {
 	return safeValue;
 };
 
-const coordBetween = (coord, xMin, xMax, yMin, yMax) =>
-	valueBetween(coord.x, xMin, xMax) && valueBetween(coord.y, yMin, yMax);
+const coordBetween = (coord, minCoord, maxCoord) =>
+	valueBetween(coord.x, minCoord.x, maxCoord.x) && valueBetween(coord.y, minCoord.y, maxCoord.y);
 
 const coordMove = (coord, change) => {
+	const copyCoord = clone(coord);
 	switch (change) {
 		case 'U':
-			coord.y--;
+			copyCoord.y--;
 			break;
 		case 'R':
-			coord.x++;
+			copyCoord.x++;
 			break;
 		case 'D':
-			coord.y++;
+			copyCoord.y++;
 			break;
 		case 'L':
 		default:
-			coord.x--;
+			copyCoord.x--;
 			break;
 	}
+	return copyCoord;
 };
 
 const distanceFromOrigin = (coord) =>
