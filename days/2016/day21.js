@@ -1,5 +1,5 @@
 const { cloneDeep } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day21 = ({ finalState, state, steps }, partNumber) => {
 	const applySteps = (steps, state) => {

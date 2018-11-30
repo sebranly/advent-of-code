@@ -1,5 +1,5 @@
 const md5 = require('js-md5');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day14 = (input, partNumber) => {
 	const correctKeyIndexes = [];

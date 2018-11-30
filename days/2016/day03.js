@@ -1,5 +1,5 @@
 const { sortBy } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day3 = (input) => {
 	const tuples = input.split(',');

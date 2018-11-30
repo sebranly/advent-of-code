@@ -70,6 +70,9 @@ const isUpperCaseLetter = (character) =>
 const replaceAt = (string, index, character) =>
 	`${string.substring(0, index)}${character}${string.substring(index + 1)}`;
 
+const twoDigits = (number) =>
+	('0' + number).slice(-2);
+
 module.exports = {
 	ABAMatches,
 	BABMatches,
@@ -79,5 +82,6 @@ module.exports = {
 	isLetter,
 	isLowerCaseLetter,
 	isUpperCaseLetter,
-	replaceAt
+	replaceAt,
+	twoDigits
 };

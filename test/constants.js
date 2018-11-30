@@ -1,5 +1,5 @@
 const LIMIT_UNIT_TEST_DURATION = 10000;
-const LONG_UNIT_TESTS = [5, 14, 16, 24];
+const LONG_UNIT_TESTS = { 2016: [5, 14, 16, 24], 2018: [] };
 
 module.exports = {
 	LIMIT_UNIT_TEST_DURATION,

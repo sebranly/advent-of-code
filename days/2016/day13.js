@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 	const arbitrarySize = 100;

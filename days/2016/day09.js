@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day9bis = (input, partNumber, cache = {}) => {
 	const output = { part1: [], part2: [] };

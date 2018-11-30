@@ -1,5 +1,5 @@
 const { flatten, uniq } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day7 = (input) => {
 	let part1 = 0, part2 = 0;

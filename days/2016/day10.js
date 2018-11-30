@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day10 = ({ microchip1, microchip2, instructions }) => {
 	let part1 = -1;

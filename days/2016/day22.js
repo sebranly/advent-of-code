@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day22 = (input) => {
 	const last = input[input.length - 1];

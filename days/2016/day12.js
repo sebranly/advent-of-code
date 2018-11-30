@@ -1,5 +1,5 @@
 const { cloneDeep } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day12 = ({ eggs1, eggs2, instructions, processor }, partNumber, isDay23 = false, isDay25 = false, valueA = 0) => {
 	const copyInstructions = cloneDeep(instructions);

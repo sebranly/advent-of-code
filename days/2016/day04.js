@@ -1,5 +1,5 @@
 const { orderBy } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day4 = (input) => {
 	let sum = 0;

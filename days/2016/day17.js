@@ -1,6 +1,6 @@
 const { cloneDeep, flattenDeep } = require('lodash');
 const md5 = require('js-md5');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const reachDay17 = (input, maze, pos, path = '') => {
 	const copyMaze = cloneDeep(maze);

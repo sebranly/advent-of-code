@@ -1,5 +1,5 @@
 const { cloneDeep } = require('lodash');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day24 = (input, partNumber) => {
 	const width = input[0].length;

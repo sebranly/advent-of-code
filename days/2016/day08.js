@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day8 = (input) => {
 	const { instructions, height, width } = input;

@@ -1,23 +1,29 @@
-const data = require('./data').testData;
+const { testData2016 } = require('./data/2016/data');
+const { testData2018 } = require('./data/2018/data');
 
 const allSolvers = require('../days');
-const solvers = allSolvers.solvers;
+const solvers = {};
+solvers[2016] = allSolvers.solvers2016;
+solvers[2018] = allSolvers.solvers2018;
 
 const CONSTANTS = require('./constants');
 
-const runTests = (data, skipLongUnitTests = false, safelist = []) => {
+const runTests = (testData, year, skipLongUnitTests = false, safelist = []) => {
+	console.log(`> YEAR ${year}:`);
+	console.log('');
+
 	const generalTimer = 'Test suite duration';
 	console.time(generalTimer);
 
 	let generalErrorCount = 0;
 	let generalTestCount = 0;
 
-	data.map((dataDay, dayIndex) => {
+	testData.map((dataDay, dayIndex) => {
 		const humanDayNumber = dayIndex + 1;
 		if (safelist.length && !safelist.includes(humanDayNumber)) return;
-		if (skipLongUnitTests && CONSTANTS.LONG_UNIT_TESTS.includes(humanDayNumber)) return;
+		if (skipLongUnitTests && CONSTANTS.LONG_UNIT_TESTS[year].includes(humanDayNumber)) return;
 
-		console.log(`> DAY ${humanDayNumber}:`);
+		console.log(`>> DAY ${humanDayNumber}:`);
 		console.log('');
 
 		[1, 2].map((partNumber) => {
@@ -26,7 +32,7 @@ const runTests = (data, skipLongUnitTests = false, safelist = []) => {
 			const partKey = `part${partNumber}`;
 			dataDay[partKey].map((dataLine, lineIndex) => {
 				const start = new Date();
-				const result = solvers[dayIndex](dataLine.input, partNumber)[partKey];
+				const result = solvers[year][dayIndex](dataLine.input, partNumber)[partKey];
 				const duration = new Date() - start;
 
 				const optionalMessage = duration > CONSTANTS.LIMIT_UNIT_TEST_DURATION
@@ -62,7 +68,9 @@ const runTests = (data, skipLongUnitTests = false, safelist = []) => {
 	const optionalReward = generalErrorCount === 0 ? ' 🎉' : '';
 	console.log(`Total: ${successfulTestCount}/${generalTestCount}${optionalReward}`);
 	console.timeEnd(generalTimer);
+	console.log('');
 	if (generalErrorCount > 0) process.exit(1);
 };
 
-runTests(data);
+// runTests(testData2016, 2016, true);
+runTests(testData2018, 2018);

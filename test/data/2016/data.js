@@ -1,10 +1,9 @@
-const daysInputData = require('../data');
-const daysInput = daysInputData.daysInput;
+const daysInput = require('../../../data').daysInput2016;
 
 const exampleDay2 = 'ULL,RRDDD,LURDL,UUUUD';
 const exampleDay6 = ['eedadn', 'drvtee', 'eandsr', 'raavrd', 'atevrs', 'tsrnev', 'sdttsa', 'rasrtv', 'nssdts', 'ntnada', 'svetve', 'tesnvt', 'vntsnd', 'vrdear', 'dvrsen', 'enarar'];
 
-const data = [
+const testData2016 = [
 	// Day 1
 	{
 		part1: [
@@ -301,4 +300,6 @@ const data = [
 	}
 ];
 
-exports.testData = data;
+module.exports = {
+	testData2016
+};

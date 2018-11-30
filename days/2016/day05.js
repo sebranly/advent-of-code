@@ -1,5 +1,5 @@
 const md5 = require('js-md5');
-const utils = require('../utils');
+const utils = require('../../utils');
 
 const day5 = (input, partNumber = null) => {
 	const code = [];
