@@ -58,7 +58,14 @@ Having a license in order to encourage contributions is definitely part of my fu
 
 ## Other years
 
-You can access 2017 repository [here](https://github.com/sebranly/advent-of-code-2017)
+You can access 2017 repository [here](https://github.com/sebranly/advent-of-code-2017). The reason why 2017 is apart is because I did it in C as it was my first Advent of Code. While C was an interesting choice, it is not the best choice especially for implementation speed (it's a good choice for execution speed though).
+
+|Advent of Code Year|Year I completed it|Completed on time|Language(s) used|Additional notes|
+|-|-|-|-|-|
+|2015|N/A|:x:|N/A|Not done yet|
+|2016|2018|:x:|JavaScript|
+|2017|2017|:white_check_mark:|C|
+|2018|N/A|N/A|JavaScript|Not done yet|
 
 ## Creator
 
