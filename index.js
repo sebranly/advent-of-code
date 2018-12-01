@@ -11,5 +11,5 @@ solvers[2018] = allSolvers.solvers2018;
 const DAY_NUMBER = 1;
 const YEAR = 2018;
 
-const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1]);
+const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1], 2);
 console.log(dayResult);
