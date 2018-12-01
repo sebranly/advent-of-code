@@ -1,7 +1,7 @@
 const day1 = (input, partNumber) => {
 	let freq = 0;
 	const solution = { part1: 0, part2: 0 };
-	const allFreq = [freq];
+	const allFreq = { [freq]: true };
 
 	let shouldContinue = true;
 	while (shouldContinue) {
@@ -9,12 +9,12 @@ const day1 = (input, partNumber) => {
 			const line = input[i];
 			freq += line;
 			if (partNumber === 2) {
-				if (allFreq.includes(freq)) {
+				if (allFreq[freq]) {
 					solution.part2 = freq;
 					return solution;
 				}
 				else {
-					allFreq.push(freq);
+					allFreq[freq] = true;
 				}
 			}
 		}
