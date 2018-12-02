@@ -77,6 +77,38 @@ describe('string', function () {
 		});
 	});
 
+	describe('allCombinationsAllSizes', () => {
+		it('handles an empty list', () => {
+			assert.deepEqual(utils.allCombinationsAllSizes([]), []);
+		});
+
+		it('handles a list of one element', () => {
+			assert.deepEqual(utils.allCombinationsAllSizes([1]), [
+				[1]
+			]);
+		});
+
+		it('handles a list of two elements', () => {
+			assert.deepEqual(utils.allCombinationsAllSizes([1, 2]), [
+				[1],
+				[2],
+				[1, 2]
+			]);
+		});
+
+		it('handles a list of three elements', () => {
+			assert.deepEqual(utils.allCombinationsAllSizes([1, 2, 3]), [
+				[1],
+				[2],
+				[3],
+				[1, 2],
+				[1, 3],
+				[2, 3],
+				[1, 2, 3]
+			]);
+		});
+	});
+
 	describe('stringOccurrences', () => {
 		it('handles an empty string', () => {
 			assert.deepEqual(utils.stringOccurrences(''), {});

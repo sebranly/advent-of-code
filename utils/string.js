@@ -39,7 +39,19 @@ const allCombinations = (arrayStrings, size = 2) => {
 	};
 
 	// At the end we convert the indexes into the actual value within arrayStrings
-	return combinations.filter((v) => validCombination(v)).map((array) => array.map((ind) => arrayStrings[ind]));
+	return combinations.filter((v) => validCombination(v)).map((combinationIndexes) => {
+		return Array.isArray(combinationIndexes)
+			? combinationIndexes.map((ind) => arrayStrings[ind])
+			: [arrayStrings[combinationIndexes]]
+	});
+};
+
+const allCombinationsAllSizes = (arrayStrings) => {
+	let combinations = [];
+	for (let size = 1 ; size <= arrayStrings.length ; size++) {
+		combinations = combinations.concat(allCombinations(arrayStrings, size));
+	}
+	return combinations;
 };
 
 const BABMatches = (string, aba) => {
@@ -141,6 +153,7 @@ const twoDigits = (number) =>
 module.exports = {
 	ABAMatches,
 	allCombinations,
+	allCombinationsAllSizes,
 	BABMatches,
 	containsABBA,
 	countOccurrenceOfCharInString,
