@@ -15,6 +15,7 @@ const ABAMatches = (string) => {
 
 // With `size = 2` it would return all pairs for instance
 const allCombinations = (arrayStrings, size = 2) => {
+	// We get a 1-dimension array of all indexes e.g. [0, 1, 2, 3] if arrayStrings has 4 elements
 	const array = new Array(arrayStrings.length);
 	for (let i = 0 ; i < array.length ; i++) {
 		array[i] = i;
@@ -24,18 +25,21 @@ const allCombinations = (arrayStrings, size = 2) => {
 	for (let j = 0 ; j < size - 1 ; j++) {
 		const cl = clone(combinations);
 		combinations = flatten(array.map((a) => cl.map((c) => {
+			// Recursive process
 			return Array.isArray(c) ? [a, ...c] : [a, c];
 		})));
 	}
 
-	const validCombination = (array, size) => {
+	const validCombination = (array) => {
 		for (let i = 1 ; i < array.length ; i++) {
+			// [0, 0, 1] is not correct, [2, 0, 1] is not either because we encountered it with [0, 1, 2] earlier
 			if (array[i] <= array[i - 1]) return false;
 		}
 		return true;
 	};
 
-	return combinations.filter((v) => validCombination(v, size)).map((array) => array.map((ind) => arrayStrings[ind]));
+	// At the end we convert the indexes into the actual value within arrayStrings
+	return combinations.filter((v) => validCombination(v)).map((array) => array.map((ind) => arrayStrings[ind]));
 };
 
 const BABMatches = (string, aba) => {
