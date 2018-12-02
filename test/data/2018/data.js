@@ -16,6 +16,15 @@ const testData2018 = [
 			{ input: [+7, +7, -2, -7, -4], output: 14 },
 			{ input: daysInput[0], output: 77666 }
 		]
+	},
+	// Day 2
+	{
+		part1: [
+			{ input: daysInput[1], output: 1 }
+		],
+		part2: [
+			{ input: daysInput[1], output: 2 }
+		]
 	}
 ];
 

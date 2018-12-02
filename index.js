@@ -8,8 +8,8 @@ const solvers = {};
 solvers[2016] = allSolvers.solvers2016;
 solvers[2018] = allSolvers.solvers2018;
 
-const DAY_NUMBER = 1;
+const DAY_NUMBER = 2;
 const YEAR = 2018;
 
-const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1], 2);
+const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1]);
 console.log(dayResult);
