@@ -1,27 +1,14 @@
 const utils = require('../../utils');
+const { find } = require('lodash');
 
 const day2 = (input) => {
 	const solution = {};
 	let count2 = 0, count3 = 0;
 
 	input.forEach((line) => {
-		let continueFor2 = true, continueFor3 = true;
-		const letters = {};
-
-		for (let i = 0 ; i < line.length && (continueFor2 || continueFor3) ; i++) {
-			const letter = line[i];
-			if (!letters[letter]) {
-				const occurrence = utils.countOccurrenceOfCharInString(letter, line);
-				if (continueFor2 && occurrence === 2) {
-					count2++;
-					continueFor2 = false;
-				} else if (continueFor3 && occurrence === 3) {
-					count3++;
-					continueFor3 = false;
-				}
-			}
-			letters[letter] = true;
-		}
+		const occ = utils.occurrences(line);
+		if (Object.values(occ).includes(2)) count2++;
+		if (Object.values(occ).includes(3)) count3++;
 	});
 	solution.part1 = count2 * count3;
 

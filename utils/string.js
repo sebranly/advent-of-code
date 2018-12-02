@@ -67,6 +67,16 @@ const isLowerCaseLetter = (character) =>
 const isUpperCaseLetter = (character) =>
 	valueBetween(character, 'A', 'Z');
 
+const occurrences = (string) => {
+	const occ = {};
+	for (let i = 0 ; i < string.length ; i++) {
+		const character = string[i];
+		if (occ[character]) occ[character]++;
+		else occ[character] = 1;
+	}
+	return occ;
+};
+
 const replaceAt = (string, index, character) =>
 	`${string.substring(0, index)}${character}${string.substring(index + 1)}`;
 
@@ -82,6 +92,7 @@ module.exports = {
 	isLetter,
 	isLowerCaseLetter,
 	isUpperCaseLetter,
+	occurrences,
 	replaceAt,
 	twoDigits
 };
