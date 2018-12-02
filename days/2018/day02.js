@@ -11,7 +11,7 @@ const day2 = (input) => {
 	});
 	solution.part1 = count2 * count3;
 
-	const pairs = utils.allGroups(input);
+	const pairs = utils.allCombinations(input);
 	pairs.forEach((pair) => {
 		const diff = utils.stringsDifferences(pair[0], pair[1]);
 		if (diff.count === 1) {

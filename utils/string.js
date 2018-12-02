@@ -1,3 +1,4 @@
+const { clone, flatten } = require('lodash');
 const { valueBetween } = require('./math');
 
 const ABAMatches = (string) => {
@@ -13,14 +14,28 @@ const ABAMatches = (string) => {
 };
 
 // With `size = 2` it would return all pairs for instance
-const allGroups = (arrayStrings) => {
-	const groups = [];
-	arrayStrings.forEach((string1, index1) => {
-		arrayStrings.forEach((string2, index2) => {
-			if (index2 > index1) groups.push([string1, string2]);
-		});
-	});
-	return groups;
+const allCombinations = (arrayStrings, size = 2) => {
+	const array = new Array(arrayStrings.length);
+	for (let i = 0 ; i < array.length ; i++) {
+		array[i] = i;
+	}
+
+	let combinations = clone(array);
+	for (let j = 0 ; j < size - 1 ; j++) {
+		const cl = clone(combinations);
+		combinations = flatten(array.map((a) => cl.map((c) => {
+			return Array.isArray(c) ? [a, ...c] : [a, c];
+		})));
+	}
+
+	const validCombination = (array, size) => {
+		for (let i = 1 ; i < array.length ; i++) {
+			if (array[i] <= array[i - 1]) return false;
+		}
+		return true;
+	};
+
+	return combinations.filter((v) => validCombination(v, size)).map((array) => array.map((ind) => arrayStrings[ind]));
 };
 
 const BABMatches = (string, aba) => {
@@ -121,7 +136,7 @@ const twoDigits = (number) =>
 
 module.exports = {
 	ABAMatches,
-	allGroups,
+	allCombinations,
 	BABMatches,
 	containsABBA,
 	countOccurrenceOfCharInString,

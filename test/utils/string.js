@@ -2,32 +2,77 @@ const assert = require('assert');
 const utils = require('../../utils/string');
 
 describe('string', function () {
-	describe('allGroups', () => {
+	describe('allCombinations', () => {
 		it('handles an empty list', () => {
-			assert.deepEqual(utils.allGroups(['']), []);
+			assert.deepEqual(utils.allCombinations(['']), []);
 		});
 
 		it('handles a list of one element', () => {
-			assert.deepEqual(utils.allGroups(['abc']), []);
+			assert.deepEqual(utils.allCombinations(['abc']), []);
 		});
 
 		it('handles a list of two elements', () => {
-			assert.deepEqual(utils.allGroups(['abc', 'def']), [
+			assert.deepEqual(utils.allCombinations(['abc', 'def']), [
 				['abc', 'def']
 			]);
 		});
 
 		it('handles a list of two elements that are equal', () => {
-			assert.deepEqual(utils.allGroups(['abc', 'abc']), [
+			assert.deepEqual(utils.allCombinations(['abc', 'abc']), [
 				['abc', 'abc']
 			]);
 		});
 
-		it('handles a list of three elements that are equal', () => {
-			assert.deepEqual(utils.allGroups(['abc', 'def', 'ghe']), [
+		it('handles a list of three elements', () => {
+			assert.deepEqual(utils.allCombinations(['abc', 'def', 'ghe']), [
 				['abc', 'def'],
 				['abc', 'ghe'],
 				['def', 'ghe']
+			]);
+		});
+
+		it('handles a list of two elements (triplets)', () => {
+			assert.deepEqual(utils.allCombinations(['abc', 'def'], 3), []);
+		});
+
+		it('handles a list of three elements (triplets)', () => {
+			assert.deepEqual(utils.allCombinations(['abc', 'def', 'ghe'], 3), [
+				['abc', 'def', 'ghe']
+			]);
+		});
+
+		it('handles a list of four elements (triplets)', () => {
+			assert.deepEqual(utils.allCombinations([1, 2, 3, 4], 3), [
+				[1, 2, 3],
+				[1, 2, 4],
+				[1, 3, 4],
+				[2, 3, 4]
+			]);
+		});
+
+		it('handles a list of five elements (triplets)', () => {
+			assert.deepEqual(utils.allCombinations([1, 2, 3, 4, 5], 3), [
+				[1, 2, 3],
+				[1, 2, 4],
+				[1, 2, 5],
+				[1, 3, 4],
+				[1, 3, 5],
+				[1, 4, 5],
+				[2, 3, 4],
+				[2, 3, 5],
+				[2, 4, 5],
+				[3, 4, 5]
+			]);
+		});
+
+		it('handles a list of six elements (5-element group)', () => {
+			assert.deepEqual(utils.allCombinations([1, 2, 3, 4, 5, 6], 5), [
+				[1, 2, 3, 4, 5],
+				[1, 2, 3, 4, 6],
+				[1, 2, 3, 5, 6],
+				[1, 2, 4, 5, 6],
+				[1, 3, 4, 5, 6],
+				[2, 3, 4, 5, 6]
 			]);
 		});
 	});
