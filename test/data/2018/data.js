@@ -1,5 +1,7 @@
 const daysInput = require('../../../data').daysInput2018;
 
+const exampleDay2 = ['abcdef', 'bababc', 'abbcde', 'abcccd', 'aabcdd', 'abcdee', 'ababab'];
+
 const testData2018 = [
 	// Day 1
 	{
@@ -20,10 +22,13 @@ const testData2018 = [
 	// Day 2
 	{
 		part1: [
-			{ input: daysInput[1], output: 1 }
+			{ input: exampleDay2, output: 12 },
+			{ input: daysInput[1], output: 4940 }
 		],
 		part2: [
-			{ input: daysInput[1], output: 2 }
+			{ input: exampleDay2, output: 'abcde' },
+			{ input: ['abcde', 'fghij', 'klmno', 'pqrst', 'fguij', 'axcye', 'wvxyz'], output: 'fgij' },
+			{ input: daysInput[1], output: 'wrziyfdmlumeqvaatbiosngkc' }
 		]
 	}
 ];
