@@ -2,22 +2,21 @@ const { sortBy } = require('lodash');
 const utils = require('../../utils');
 
 const day3 = (input) => {
-	const tuples = input.split(',');
 	let validTuples = 0;
-	tuples.forEach((tuple) => {
-		const values = utils.sanitizeTupleDay3(tuple);
-		const sortedValues = sortBy(values);
+	console.log(input[0]);
+	input.forEach((tuple) => {
+		const sortedValues = sortBy(tuple);
 		if (sortedValues[0] + sortedValues[1] > sortedValues[2])
 			validTuples++;
 	});
 
 	let validVerticalTuples = 0;
-	for (let i = 0 ; i < tuples.length ; i += 3) {
+	for (let i = 0 ; i < input.length ; i += 3) {
 		[0, 1, 2].forEach((column) => {
 			const values = [
-				utils.sanitizeTupleDay3(tuples[i])[column],
-				utils.sanitizeTupleDay3(tuples[i + 1])[column],
-				utils.sanitizeTupleDay3(tuples[i + 2])[column],
+				input[i][column],
+				input[i + 1][column],
+				input[i + 2][column],
 			];
 			const sortedValues = sortBy(values);
 			if (sortedValues[0] + sortedValues[1] > sortedValues[2])

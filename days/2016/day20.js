@@ -1,9 +1,8 @@
 const { sortBy } = require('lodash');
 
 const day20 = ({ bannedIPs, max }) => {
-	const ranges = bannedIPs.map((range) => {
-		const limits = range.split('-');
-		return { min: parseInt(limits[0], 10), max: parseInt(limits[1], 10) };
+	const ranges = bannedIPs.map((pair) => {
+		return { min: pair[0], max: pair[1] };
 	});
 	const sortedRanges = sortBy(ranges, 'min');
 	let i = 0;

@@ -3,13 +3,31 @@ const { twoDigits } = require('./string');
 
 const buildFullPath = (year, dayNumber) => `./data/${year}/days/day${twoDigits(dayNumber)}.txt`;
 
-const readFile = (year, dayNumber, convertToInt = false, format = 'utf8') => {
+const readFile = (year, dayNumber, options = {}, format = 'utf8') => {
+	const {
+		convertToArraysOfInts,
+		convertToInt,
+		delimiter,
+		innerDelimiter,
+		uniqueInt,
+		uniqueString
+	} = options;
+
 	const filepath = buildFullPath(year, dayNumber);
 	const file = fs.readFileSync(filepath, format);
-	const lines = file.split(/\r?\n/);
-	return convertToInt
+	const correctDelimiter = delimiter || /\r?\n/;
+	const lines = file.split(correctDelimiter).map((line) => line.trim().replace(/  +/g, ' '));
+	if (uniqueString) return lines[0];
+	if (uniqueInt) return parseInt(lines[0], 10);
+
+	const rightFormatLines = convertToInt
 		? lines.map((line) => parseInt(line, 10))
 		: lines;
+	if (convertToArraysOfInts) {
+		const correctInnerDelimiter = innerDelimiter || ' ';
+		return rightFormatLines.map((line) => line.split(correctInnerDelimiter).map((e) => parseInt(e, 10)))
+	}
+	return rightFormatLines;
 };
 
 module.exports = {

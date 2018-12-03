@@ -11,8 +11,7 @@ const day1 = (input) => {
 	let firstLocationVisitedTwice = null;
 	const history = [{ x: 0, y: 0 }];
 
-	const steps = input.split(',').map((step) => step.trim());
-	steps.map((step) => {
+	input.map((step) => {
 		const letter = step[0];
 		const number = parseInt(step.substring(1), 10);
 		const directionChange = letter === 'L' ? -1 : 1;

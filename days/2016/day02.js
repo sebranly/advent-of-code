@@ -20,8 +20,7 @@ const day2 = (input) => {
 		{ x: 1, y: 1 },
 		{ x: 0, y: 2 }
 	];
-	const steps = input.split(',');
-	steps.forEach((step) => {
+	input.forEach((step) => {
 		for (let i = 0; i < step.length; i++) {
 			const letter = step.charAt(i);
 			copyCoord = { ...coords[1] };

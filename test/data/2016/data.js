@@ -1,19 +1,20 @@
 const daysInput = require('../../../data').daysInput2016;
 
-const exampleDay2 = 'ULL,RRDDD,LURDL,UUUUD';
+const exampleDay2 = ['ULL', 'RRDDD', 'LURDL', 'UUUUD'];
 const exampleDay6 = ['eedadn', 'drvtee', 'eandsr', 'raavrd', 'atevrs', 'tsrnev', 'sdttsa', 'rasrtv', 'nssdts', 'ntnada', 'svetve', 'tesnvt', 'vntsnd', 'vrdear', 'dvrsen', 'enarar'];
+const exampleDay21 = ['swap position 4 with position 0', 'swap letter d with letter b', 'reverse positions 0 through 4', 'rotate left 1 step', 'move position 1 to position 4', 'move position 3 to position 0', 'rotate based on position of letter b', 'rotate based on position of letter d'];
 
 const testData2016 = [
 	// Day 1
 	{
 		part1: [
-			{ input: 'R2, L3', output: 5 },
-			{ input: 'R2, R2, R2', output: 2 },
-			{ input: 'R5, L5, R5, R3', output: 12 },
+			{ input: ['R2', 'L3'], output: 5 },
+			{ input: ['R2', 'R2', 'R2'], output: 2 },
+			{ input: ['R5', 'L5', 'R5', 'R3'], output: 12 },
 			{ input: daysInput[0], output: 161 }
 		],
 		part2: [
-			{ input: 'R8, R4, R4, R8', output: 4 },
+			{ input: ['R8', 'R4', 'R4', 'R8'], output: 4 },
 			{ input: daysInput[0], output: 110 }
 		]
 	},
@@ -31,11 +32,11 @@ const testData2016 = [
 	// Day 3
 	{
 		part1: [
-			{ input: '5 10 25,11 12 13,6 57 28', output: 1 },
+			{ input: [[5, 10, 25], [11, 12, 13] , [6, 57, 28]], output: 1 },
 			{ input: daysInput[2], output: 1050 }
 		],
 		part2: [
-			{ input: '5 10 25,11 12 13,6 57 28,8 10 25,11 12 13,6 20 28', output: 4 },
+			{ input: [[5, 10, 25] , [11, 12, 13], [6, 57, 28], [8, 10, 25], [11, 12, 13], [6, 20, 28]], output: 4 },
 			{ input: daysInput[2], output: 1921 }
 		]
 	},
@@ -101,7 +102,8 @@ const testData2016 = [
 	// Day 8
 	{
 		part1: [
-			{ input: { width: 7, height: 3, instructions: ['rect 3x2', 'rotate column x=1 by 1', 'rotate row y=0 by 4', 'rotate column x=1 by 1'] }, output: 6 }
+			{ input: { width: 7, height: 3, instructions: ['rect 3x2', 'rotate column x=1 by 1', 'rotate row y=0 by 4', 'rotate column x=1 by 1'] }, output: 6 },
+			{ input: daysInput[7], output: 110 }
 		],
 		part2: [
 			// TODO: find a way to have it. Solution is 'ZJHRKCPLYJ'
@@ -243,22 +245,22 @@ const testData2016 = [
 	// Day 20
 	{
 		part1: [
-			{ input: { bannedIPs: ['5-8', '0-2', '4-7'], max: 9 }, output: 3 },
+			{ input: { bannedIPs: [[5, 8], [0, 2], [4, 7]], max: 9 }, output: 3 },
 			{ input: daysInput[19], output: 23923783 }
 		],
 		part2: [
-			{ input: { bannedIPs: ['5-8', '0-2', '4-7'], max: 9 }, output: 2 },
+			{ input: { bannedIPs: [[5, 8], [0, 2], [4, 7]], max: 9 }, output: 2 },
 			{ input: daysInput[19], output: 125 }
 		]
 	},
 	// Day 21
 	{
 		part1: [
-			{ input: { state: 'abcde', steps: ['swap position 4 with position 0', 'swap letter d with letter b', 'reverse positions 0 through 4', 'rotate left 1 step', 'move position 1 to position 4', 'move position 3 to position 0', 'rotate based on position of letter b', 'rotate based on position of letter d'] }, output: 'decab' },
+			{ input: { state: 'abcde', steps: exampleDay21 }, output: 'decab' },
 			{ input: daysInput[20], output: 'cbeghdaf' }
 		],
 		part2: [
-			{ input: { finalState: 'decab', steps: ['swap position 4 with position 0', 'swap letter d with letter b', 'reverse positions 0 through 4', 'rotate left 1 step', 'move position 1 to position 4', 'move position 3 to position 0', 'rotate based on position of letter b', 'rotate based on position of letter d'] }, output: 'abcde' },
+			{ input: { finalState: 'decab', steps: exampleDay21 }, output: 'abcde' },
 			{ input: daysInput[20], output: 'bacdefgh' }
 		]
 	},

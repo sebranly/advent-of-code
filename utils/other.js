@@ -43,11 +43,7 @@ const indexDay4 = (array, character) => {
 	return undefined;
 };
 
-const sanitizeTupleDay3 = (tuple) =>
-	tuple.split(' ').map((v) => parseInt(v, 10));
-
 module.exports = {
 	b,
-	indexDay4,
-	sanitizeTupleDay3
+	indexDay4
 };
