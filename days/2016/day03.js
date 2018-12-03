@@ -3,7 +3,6 @@ const utils = require('../../utils');
 
 const day3 = (input) => {
 	let validTuples = 0;
-	console.log(input[0]);
 	input.forEach((tuple) => {
 		const sortedValues = sortBy(tuple);
 		if (sortedValues[0] + sortedValues[1] > sortedValues[2])

@@ -72,5 +72,5 @@ const runTests = (testData, year, skipLongUnitTests = false, safelist = []) => {
 	if (generalErrorCount > 0) process.exit(1);
 };
 
-runTests(testData2016, 2016, false);
+// runTests(testData2016, 2016, false);
 runTests(testData2018, 2018, false);

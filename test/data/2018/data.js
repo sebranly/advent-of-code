@@ -30,6 +30,15 @@ const testData2018 = [
 			{ input: ['abcde', 'fghij', 'klmno', 'pqrst', 'fguij', 'axcye', 'wvxyz'], output: 'fgij' },
 			{ input: daysInput[1], output: 'wrziyfdmlumeqvaatbiosngkc' }
 		]
+	},
+	// Day 3
+	{
+		part1: [
+			{ input: daysInput[2], output: 'abcdef' }
+		],
+		part2: [
+			{ input: daysInput[2], output: 'defabc' }
+		]
 	}
 ];
 
