@@ -23,7 +23,6 @@ const day13 = ({ favoriteNumber, goalX, goalY, startPointX, startPointY }) => {
 	const displayArray = false;
 	if (displayArray) {
 		for (let y = 0 ; y < 10 ; y++) {
-			console.log('');
 			const line = [];
 			for (let x = 0 ; x < arbitrarySize ; x++) {
 				const value = array[y][x];

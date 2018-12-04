@@ -1,8 +1,8 @@
 const { sortBy } = require('lodash');
 const { valueBetween } = require('./math');
 
-const fillShortestPath = (array, currentX, currentY, canWalkOn, limitSize, steps = 0) => {
-	const correctValues = valueBetween(currentX, 0, limitSize - 1) && valueBetween(currentY, 0, limitSize - 1);
+const fillShortestPath = (array, currentX, currentY, canWalkOn, width, height = width, steps = 0) => {
+	const correctValues = valueBetween(currentX, 0, width - 1) && valueBetween(currentY, 0, height - 1);
 	const canWalkOnCell = correctValues && (array[currentY][currentX] === canWalkOn || Number.isInteger(array[currentY][currentX]));
 	if (!canWalkOnCell) {
 		return;
@@ -18,7 +18,7 @@ const fillShortestPath = (array, currentX, currentY, canWalkOn, limitSize, steps
 
 	for (let i = 0 ; i < possibleMoves.length ; i++) {
 		const move = possibleMoves[i];
-		fillShortestPath(array, currentX + move[0], currentY + move[1], canWalkOn, limitSize, steps + 1);
+		fillShortestPath(array, currentX + move[0], currentY + move[1], canWalkOn, width, height, steps + 1);
 	}
 };
 
