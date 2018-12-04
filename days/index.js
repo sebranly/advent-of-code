@@ -1,6 +1,6 @@
 const { twoDigits } = require('../utils/string');
 
-const NUMBER_OF_DAYS = { 2016: 25, 2018: 3 };
+const NUMBER_OF_DAYS = { 2016: 25, 2018: 4 };
 
 const solvers = {};
 

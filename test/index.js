@@ -73,4 +73,4 @@ const runTests = (testData, year, skipLongUnitTests = false, safelist = []) => {
 };
 
 // runTests(testData2016, 2016, false);
-runTests(testData2018, 2018, false);
+runTests(testData2018, 2018, false, [4]);
