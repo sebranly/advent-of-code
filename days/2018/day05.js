@@ -10,7 +10,7 @@ const day5 = (input, partNumber) => {
 
 	let firstRound;
 	for (let upperCaseCode = UPPERCASE_A_VALUE ; upperCaseCode < UPPERCASE_A_VALUE + NUMBER_OF_LETTERS ; upperCaseCode++) {
-		firstRound = partNumber === 2 ? true : false;
+		firstRound = partNumber === 2;
 		const arrayClone = clone(array);
 		const lowerCaseCode = upperCaseCode + DIFFERENCE_LOWERCASE_UPPERCASE;
 		shouldContinue = true;
@@ -24,6 +24,7 @@ const day5 = (input, partNumber) => {
 				if (firstRound) {
 					if (isExpectedLetter) {
 						arrayClone.splice(index, 1);
+						index = Math.max(0, index - 1);
 					} else { 
 						index++;
 					}
@@ -34,7 +35,7 @@ const day5 = (input, partNumber) => {
 						: true
 					if (additionalCondition && Math.abs(arrayClone[index].charCodeAt(0) - arrayClone[index + 1].charCodeAt(0)) === DIFFERENCE_LOWERCASE_UPPERCASE) {
 						arrayClone.splice(index, 2);
-						shouldContinue = true;
+						index = Math.max(0, index - 2);
 					} else {
 						index++;
 					}
