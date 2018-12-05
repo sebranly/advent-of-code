@@ -7,6 +7,7 @@ const daysInput2018 = [
 	utils.readFile(YEAR, 2),
 	utils.readFile(YEAR, 3),
 	utils.readFile(YEAR, 4),
+	utils.readFile(YEAR, 5, { uniqueString: true })
 ];
 
 module.exports = {
