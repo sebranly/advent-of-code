@@ -55,7 +55,7 @@ const runTests = (testData, year, skipLongUnitTests = false, safelist = []) => {
 			});
 			if (errorCount !== 0) {
 				console.log(`Failure: ${errorCount} error(s)`);
-				generalErrorCount++;
+				generalErrorCount += errorCount;
 			}
 			else {
 				console.log(`Success! (${dataDay[partKey].length} test(s))`);
@@ -72,5 +72,5 @@ const runTests = (testData, year, skipLongUnitTests = false, safelist = []) => {
 	if (generalErrorCount > 0) process.exit(1);
 };
 
-// runTests(testData2016, 2016, false);
-runTests(testData2018, 2018, false, [5]);
+runTests(testData2016, 2016);
+runTests(testData2018, 2018);
