@@ -10,7 +10,8 @@ const daysInput2018 = [
 	utils.readFile(YEAR, 5, { uniqueString: true }),
 	utils.readFile(YEAR, 6, { convertToArraysOfInts: true, innerDelimiter: ',' }),
 	utils.readFile(YEAR, 7),
-	utils.readFile(YEAR, 8, { convertToUniqueArrayOfInts: true })
+	utils.readFile(YEAR, 8, { convertToUniqueArrayOfInts: true }),
+	utils.readFile(YEAR, 9, { uniqueString: true })
 ];
 
 module.exports = {

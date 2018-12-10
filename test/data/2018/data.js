@@ -110,6 +110,20 @@ const testData2018 = [
 			{ input: exampleDay8, output: 66 },
 			{ input: daysInput[7], output: 17206 }
 		]
+	},
+	// Day 9
+	{
+		part1: [
+			{ input: '10 players; last marble is worth 1618 points', output: 8317 },
+			{ input: '13 players; last marble is worth 7999 points', output: 146373 },
+			{ input: '17 players; last marble is worth 1104 points', output: 2764 },
+			{ input: '21 players; last marble is worth 6111 points', output: 54718 },
+			{ input: '30 players; last marble is worth 5807 points', output: 37305 },
+			{ input: daysInput[8], output: 371284 }
+		],
+		part2: [
+			{ input: daysInput[8], output: 3038972494 }
+		]
 	}
 ];
 

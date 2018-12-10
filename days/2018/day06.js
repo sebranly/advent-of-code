@@ -1,5 +1,4 @@
 const { orderBy } = require('lodash');
-const utils = require('../../utils');
 
 const day6 = ({ inputCoord, maxiDistance }) => {
 	const solution = {};

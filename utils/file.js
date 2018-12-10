@@ -22,7 +22,7 @@ const readFile = (year, dayNumber, options = {}, format = 'utf8') => {
 	const lines = file.split(correctDelimiter).map((line) => line.trim().replace(/  +/g, ' '));
 	if (uniqueString) return lines[0];
 	if (uniqueInt) return parseInt(lines[0], 10);
-	if (convertToUniqueArrayOfInts) return lines[0].split(correctInnerDelimiter).map((line) => parseInt(line, 10));
+	if (convertToUniqueArrayOfInts) return lines[0].split(correctInnerDelimiter).map((v) => parseInt(v, 10));
 
 	const rightFormatLines = convertToInt
 		? lines.map((line) => parseInt(line, 10))
