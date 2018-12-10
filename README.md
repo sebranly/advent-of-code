@@ -3,7 +3,7 @@ Advent of Code is a series of small programming puzzles for a variety of skill l
 
 ## Setup
 
-- Clone the repository on your computer by running `git@github.com:sebranly/advent-of-code.git` in a terminal
+- Clone the repository on your computer by running `git clone git@github.com:sebranly/advent-of-code.git` in a terminal
 - You need to have `node` installed, my current version is `v8.9.0` (obtained after running `node --version`)
 - Within the root repository in a terminal, run `npm install` (so that it creates the `node_modules` folder based on `package.json`)
 
@@ -16,28 +16,28 @@ For example if you want to run day 9 of year 2018, go to `index.js` and change t
 const DAY_NUMBER = 9; // This one
 const YEAR = 2018; // This other one as well
 
-const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1]);
+const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1]); // There is no need to change that one
 ```
 
 ### Note
 
-As this repository is a work-in-progress and as my main focus for Advent of Code is solving challenges as fast as possible, the code I produce is most of the time not the more elegant one, although I spend time refactoring things before pushing it to GitHub.
+As this repository is a work-in-progress and as my main focus for Advent of Code is solving challenges as fast as possible, the code I produce is most of the time not the most elegant one, although I spend time refactoring things before pushing it to GitHub.
 For this reason, for some challenges, you might have to explicitly set the `partNumber` as well. For example if you see that the solution for `part2` of a problem doesn't appear or looks wrong, make sure to add the part within `index.js` in `const dayResult = solvers[YEAR][DAY_NUMBER - 1](daysInput[YEAR][DAY_NUMBER - 1], 2);` (`2` for `part2`)
 
 ## Test suite
 
-Open to `test/index.js` and activate the unit tests you want to run. For example if you want to run all the available tests, make sure the two lines are:
+Open `test/index.js` and activate the unit tests you want to run. For example if you want to run all the available tests, make sure the two lines are uncommented and exactly:
 ```js
 runTests(testData2016, 2016);
 runTests(testData2018, 2018);
 ```
-Optionally, if you want to skip unit tests considered as too long, you can pass a first argument `true`.
+Note: Optionally, if you want to skip the unit tests that are considered as too long, you can pass a first argument `true`.
 
 Within the root repository in a terminal, run `npm test`. It will execute two test suites:
 - one for `utils` thanks to `mocha`
 - one for `days` challenges thanks to a handmade unit test tool
 
-If the test suite is successful you'll see `mocha` results first then the handmade unit test tool's results:
+If the test suite is successful you'll see `mocha` results first then the handmade unit test tool's results for each year:
 ```
 24 passing (12ms)
 
